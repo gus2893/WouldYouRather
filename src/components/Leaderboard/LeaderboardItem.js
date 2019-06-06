@@ -14,11 +14,11 @@ const LeaderboardItem = ({user, avatar, name, rank}) => (
             <Divider horizontal><Header as='h6'>Breakdown</Header></Divider>
             <List divided>
                 <List.Item>
-                    <List.Content floated='right'>{user.questions}</List.Content>
+                    <List.Content floated='right'>{user.answers}</List.Content>
                     <List.Content floated='left'>Answered Questions</List.Content>
                 </List.Item> 
                 <List.Item>
-                    <List.Content floated='right'>{user.answers}</List.Content>
+                    <List.Content floated='right'>{user.questions}</List.Content>
                     <List.Content floated='left'>Created Questions</List.Content>
                 </List.Item>    
             </List>

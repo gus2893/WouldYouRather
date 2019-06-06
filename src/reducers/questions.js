@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS } from '../actions/questions'
+import { RECEIVE_QUESTIONS, ADD_ANSWER } from '../actions/questions'
 import { ADD_QUESTION } from '../actions/questions'
 
 export default function questions (state={}, action) {
@@ -14,6 +14,16 @@ export default function questions (state={}, action) {
                 ...state,
                 [action.question.id]: action.question
             }
+        case ADD_ANSWER:
+            return{                
+                ...state,
+                [action.answer.qid]: {
+                    ...state[action.answer.qid],
+                    [action.answer.answer]: {
+                        ...state[action.answer.qid][action.answer.answer],
+                        votes:[...state[action.answer.qid][action.answer.answer].votes, action.answer.authedUser ]
+                    }
+            }}
         default:
             return state
     }

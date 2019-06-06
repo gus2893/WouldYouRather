@@ -1,5 +1,5 @@
 import React, { Component, Fragment} from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import QuestionDashboard from './components/Dashboard/QuestionDashboard'
 import Login from './components/Nav/Login'
 import Leaderboard from './components/Leaderboard/Leaderboard'
@@ -10,6 +10,7 @@ import { handleInitialData } from './actions/shared'
 import LoadingBar from 'react-redux-loading'
 import { Container } from 'semantic-ui-react'
 import QuestionPage from './components/NewQuestions/QuestionPage'
+import NotFound from './components/Nav/NotFound'
 
 
 class App extends Component  {
@@ -23,14 +24,20 @@ class App extends Component  {
       <Fragment>
       <LoadingBar/>
         <Container>
-          <Nav/>
-          <div>
+         <Nav/>
+          {this.props.authUser === null
+            ?<Route path='*' component={Login} />
+            :   
+                   
+          <Switch>
             <Route path='/' exact component={QuestionDashboard}/>
-            <Route path='/login' component={Login} />
             <Route path='/leaderboard' component={Leaderboard}/>
             <Route path='/question/:id' component={QuestionPage}/>
             <Route path='/add' component={NewQuestion}/>
-          </div>
+            <Route path='/*' component={NotFound} />
+          </Switch>
+            }
+
         </Container>
         </Fragment>
       </BrowserRouter>
@@ -38,6 +45,10 @@ class App extends Component  {
   }
 }
 
+const mapStateToProps = ({authUser}) =>{
+  return{
+    authUser
+  }
+}
 
-
-export default connect()(App);
+export default connect(mapStateToProps)(App);

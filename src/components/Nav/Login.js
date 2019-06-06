@@ -1,24 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Dropdown, Segment, Container, Button, Divider, Header, Card, Image } from 'semantic-ui-react'
+import { Dropdown, Segment, Container, Button, Divider, Header, Card, Image, Message } from 'semantic-ui-react'
 import _  from 'lodash'
 import { setAuthUser } from '../../actions/authedUser'
 import { withRouter } from 'react-router-dom'
 
 class Login extends React.Component {
     state = {
-        selected : ''
+        selected : '',
+        showError: true,
     }
     handleChange = (e, { value }) => this.setState({ selected : value})
 
     signIn = () =>{
+        if(this.state.selected === ''){
+            return this.setState({ showError: false})
+        }
+     
         this.props.dispatch(setAuthUser(this.state.selected))
-        this.props.history.push('/')
+        this.props.history.push(this.props.location.pathname)
+    
+
     }
 
     render(){
         const { loginUsers, users } = this.props
-        const { selected } = this.state
+        const { selected, showError } = this.state
     
         return(
             <Container style={{width: '500px'}}>
@@ -54,6 +61,12 @@ class Login extends React.Component {
                         selection
                         options={loginUsers}
                         onChange={this.handleChange}
+                    />
+                    <Message
+                        hidden={showError}
+                        error
+                        header='Please Select an User'
+                        content='You must select the user you wish to log in as.'
                     />
 
                     <Divider horizontal>

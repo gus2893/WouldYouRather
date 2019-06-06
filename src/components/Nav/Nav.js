@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Menu, Container } from 'semantic-ui-react'
+import { Menu, Container, Image } from 'semantic-ui-react'
 import { setAuthUser } from '../../actions/authedUser'
 import { withRouter } from 'react-router-dom'
 
@@ -24,14 +24,19 @@ class Nav extends React.Component{
                 </NavLink>
                 
                 <NavLink to='/add' >
-                    <Menu.Item name='New Question' active={location.pathname === '/new'} onClick={this.handleItemClick} />      
+                    <Menu.Item name='New Question' active={location.pathname === '/add'} onClick={this.handleItemClick} />      
                 </NavLink>
                 <NavLink to='/leaderboard' >
                     <Menu.Item name='Leaderboard' active={location.pathname === '/leaderboard'} onClick={this.handleItemClick} />      
                 </NavLink>
                     
             <Menu.Menu position='right'>
-                <Menu.Item >{authedUser ? `Hello, ${authedUser.name}` : null}</Menu.Item>
+                <Menu.Item >
+                    {authedUser ?`Hello, ${authedUser.name}` : null}   
+                </Menu.Item>
+                <Menu.Item style={{padding:0}}>
+                    {authedUser ?<Image src={authedUser.avatarURL}avatar ></Image> : null}
+                </Menu.Item>
                 <Menu.Item />
                 { authedUser
                 ? 

@@ -34,7 +34,6 @@ class Question extends Component {
 }
 
 const mapStateToProps = ({questions, users, authUser }, {question}) =>{
-  console.log(question)
     const author = users[question.author]
     return{
         authUser,
